@@ -1,0 +1,10 @@
+beautifulsoup4==4.12.3
+nltk==3.8.1
+numpy==1.26.4
+pandas==2.2.2
+psycopg2_binary==2.9.9
+Requests==2.32.3
+spacy==3.7.3
+streamlit==1.36.0
+torch==2.3.0
+transformers==4.36.2

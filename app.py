@@ -15,11 +15,12 @@ import psycopg2
 from psycopg2.extras import execute_values
 
 import streamlit as st
-# import altair as alt
+import altair as alt
 
 from datetime import datetime, timedelta, date
 
 # import nltk
+# nltk.download('stopwords')
 from nltk.corpus import stopwords
 
 import spacy
@@ -242,10 +243,9 @@ def keyword_plots():
     # Date range by keyword(s)
     st.header('Data Range', divider='blue')
     view_range_option = st.selectbox(
-        'Select View Range',
+        'Select Range',
         list(range_selector.values()),
-        index=0,
-        label_visibility='hidden'
+        index=0
     )
 
     selected_index = list(range_selector.values()).index(view_range_option)
@@ -299,37 +299,16 @@ def keyword_plots():
     keyword_options = list(temp_df_plot.columns)
 
     selected_keywords = st.multiselect(
-        "What are your favorite colors",
+        'Select Keywords',
         keyword_options,
-        max_selections=2,
-        placeholder='Choose keyords',
-        label_visibility='hidden'
+        placeholder='Keywords',
+        # label_visibility='hidden'
     )
 
     if selected_keywords:
         keyword_plot = temp_df_plot[selected_keywords]
         st.line_chart(keyword_plot)
-
-
-    # progress_bar = st.sidebar.progress(0)
-    # status_text = st.sidebar.empty()
-    # last_rows = np.random.randn(1, 1)
-    # chart = st.line_chart(last_rows)
-
-    # for i in range(1, 101):
-    #     new_rows = last_rows[-1, :] + np.random.randn(5, 1).cumsum(axis=0)
-    #     status_text.text("%i%% Complete" % i)
-    #     chart.add_rows(new_rows)
-    #     progress_bar.progress(i)
-    #     last_rows = new_rows
-    #     time.sleep(0.05)
-
-    # progress_bar.empty()
-
-    # # Streamlit widgets automatically run the script from top to bottom. Since
-    # # this button is not connected to any other logic, it just causes a plain
-    # # rerun.
-    # st.button("Re-run")
+        
 
 def doj_web_scraper():
 
@@ -500,13 +479,6 @@ def doj_web_scraper():
         # print(f'Number of negative classes: {neg_class}')
 
         return classification_list
-
-    ### DATABASE CONNECTION
-    DB = 'compliance_db'
-    USER = 'postgres'
-    PW = 'admin'
-    HOST = 'localhost'
-    PORT = 5432
     
     date_today = date.today()
 
@@ -669,6 +641,10 @@ def doj_web_scraper():
             except AttributeError:
                 st.warning('Not enough data found to scrape')
 
+    else:
+        st.markdown('<h1 style="text-align: center;">💯🔥</h1>', unsafe_allow_html=True)
+        st.write(f'## Department of Justice Press release data is up to date!')
+
 def modify_data():
 
     st.markdown(f'# modifiy data')
@@ -728,7 +704,7 @@ def modify_data():
                 'row_id': None,
                 'article_summary': None,
                 'cleaned_title_summary': None,
-                'article_url': None,
+                'article_url': st.column_config.LinkColumn('article', display_text='link'),
                 'date_published': 'date',
                 'model_pred': 'pred',
 
