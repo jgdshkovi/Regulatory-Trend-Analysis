@@ -313,6 +313,14 @@ def keyword_plots():
 def doj_web_scraper():
 
     st.markdown(f'# doj web scraper')
+    st.write(f'''
+                 - This page gets all Department of Justice press releases within the specified date range
+                    - The retrieved data will be evaluated as being compliance related using a fine-tuned pre-trained distilbert model
+                    - After the model predictions are completed the database will insert the new records <br>
+                 
+                 Data courtesy of the **Department of Justice** https://www.justice.gov.
+                 '''
+                 )
    
     # FUNCTIONS
     def doj_base_url(start_date, end_date) -> str:
@@ -505,15 +513,6 @@ def doj_web_scraper():
         day_diff = date_today - last_doj_scrape
         st.write(f'## DOJ press release data is _' + str(day_diff.days) + '_ days old')
 
-        st.write(f'''
-                 - This page gets all Department of Justice press releases within the specified date range
-                    - The retrieved data will be evaluated as being compliance related using a fine-tuned pre-trained distilbert model
-                    - After the model predictions are completed the database will insert the new records <br>
-                 
-                 Data courtesy of the **Department of Justice** https://www.justice.gov.
-                 '''
-                 )
-
         if 'btn_get_more_data' not in st.session_state:
             st.session_state.btn_get_more_data = False
         
@@ -642,8 +641,8 @@ def doj_web_scraper():
                 st.warning('Not enough data found to scrape')
 
     else:
+        st.write(f'## Department of Justice press release data is up to date!')
         st.markdown('<h1 style="text-align: center;">💯🔥</h1>', unsafe_allow_html=True)
-        st.write(f'## Department of Justice Press release data is up to date!')
 
 def modify_data():
 

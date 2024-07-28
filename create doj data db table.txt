@@ -1,0 +1,20 @@
+
+-- Table: public.doj_scrape_data
+CREATE TABLE IF NOT EXISTS public.doj_scrape_data
+(
+    row_id serial,
+    article_title text COLLATE pg_catalog."default" NOT NULL,
+    article_summary text COLLATE pg_catalog."default",
+	cleaned_title_summary text COLLATE pg_catalog."default" NOT NULL,
+    article_url text COLLATE pg_catalog."default" NOT NULL,
+    date_published date NOT NULL,
+	model_pred boolean,
+	modify_pred boolean,
+    CONSTRAINT doj_scrape_data_pkey PRIMARY KEY (row_id),
+    CONSTRAINT doj_scrape_data_article_url_key UNIQUE (article_url)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.doj_scrape_data
+    OWNER to postgres;
